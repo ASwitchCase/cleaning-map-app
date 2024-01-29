@@ -7,7 +7,19 @@ body {
 }
 
 .map-plain{
-  width: 100px;
-  height: 100px;
+  width: 800px;
+  height: 800px;
   border: 1px solid black;
+
+  position: relative;
+}
+
+.site-marker-container{
+  width: 10px;
+  height: 10px;
+
+  border: 1px solid black;
+  border-radius: 100%;
+
+  position: absolute;
 }
