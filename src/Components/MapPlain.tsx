@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import SiteMarker from './SiteMarker'
 import { SiteModel } from 'src/Models/SiteModel'
+import img from '/Public/SeatingMap.jpg'
+import { Card, ToggleButton, ToggleButtonGroup } from '@mui/material'
 
 const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -12,14 +14,18 @@ const uuidv4 = () => {
 }
 
 enum MapMode {
-  ADD,
-  EDIT,
-  VIEW
+  ADD = "add",
+  EDIT = "edit",
+  VIEW = "view"
 }
 
 const MapPlain = () => {
   const[mode,setMode] = useState<MapMode>(MapMode.ADD)
   const[siteMarkers,setSiteMarkers] = useState([])
+
+  const handleChange = (event: React.MouseEvent<HTMLElement>,newMode: MapMode,) => {
+    setMode(newMode);
+  };
 
   const getMouseCords = (e : any) =>{
       let cords = {
@@ -48,9 +54,51 @@ const MapPlain = () => {
   },[])
 
   return (
-    <div onClick={(e)=> addSiteMarker(e)} className='map-plain'>
-      {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
-    </div>
+  <>
+    <Card sx={{ 
+        maxWidth: 1300,
+        padding:1,
+        display: 'flex',
+        justifyContent: 'space-around',
+    }}>
+        {mode == MapMode.ADD?
+        <div onClick={(e)=> addSiteMarker(e)} className='map-plain'>
+          <img className='map-img' src={img}></img>
+          {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
+        </div>
+        
+      :mode == MapMode.EDIT?
+        <div className='map-plain'>
+          <img className='map-img' src={img}></img>
+          {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
+        </div>
+
+      :mode == MapMode.VIEW?
+      <div className='map-plain'>
+        <img className='map-img' src={img}></img>
+        {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
+      </div>
+      :<h1>Error: No Mode</h1>
+      }
+
+      <div className='tools'>
+      <ToggleButtonGroup
+        color="primary"
+        value={mode}
+        exclusive
+        onChange={handleChange}
+        aria-label="Platform"
+      >
+        <ToggleButton value="add">ADD</ToggleButton>
+        <ToggleButton value="edit">EDIT</ToggleButton>
+        <ToggleButton value="view">VIEW</ToggleButton>
+      </ToggleButtonGroup>
+      </div>
+    </Card>
+    
+  </>
+
+    
   )
 }
 
