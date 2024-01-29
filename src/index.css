@@ -5,3 +5,9 @@ body {
   max-width: 38rem;
   padding: 2rem;
 }
+
+.map-plain{
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+}
