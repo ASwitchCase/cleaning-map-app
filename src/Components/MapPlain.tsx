@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import SiteMarker from './SiteMarker'
 import { SiteModel } from 'src/Models/SiteModel'
 import img from '/Public/SeatingMap.jpg'
-import { Card, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { Button, Card, List, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import Issue from './Issue'
 
 const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -37,6 +38,12 @@ const MapPlain = () => {
 
   const addSiteMarker = (e : any) => {
     const cords = getMouseCords(e)
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
     const newModel : SiteModel = {
       cords: {
         x: cords.x,
@@ -44,7 +51,8 @@ const MapPlain = () => {
       },
       id: uuidv4(),
       issues: [],
-      description: ''
+      description: 'Issue Site',
+      created_at:`${day}-${month}-${year}`
     }
     setSiteMarkers([...siteMarkers,newModel])
   }
@@ -82,17 +90,31 @@ const MapPlain = () => {
       }
 
       <div className='tools'>
-      <ToggleButtonGroup
-        color="primary"
-        value={mode}
-        exclusive
-        onChange={handleChange}
-        aria-label="Platform"
-      >
-        <ToggleButton value="add">ADD</ToggleButton>
-        <ToggleButton value="edit">EDIT</ToggleButton>
-        <ToggleButton value="view">VIEW</ToggleButton>
-      </ToggleButtonGroup>
+      <h1>Change Mode</h1>
+        <ToggleButtonGroup
+          color="primary"
+          value={mode}
+          exclusive
+          onChange={handleChange}
+          aria-label="Platform"
+          >
+          <ToggleButton value="add">ADD</ToggleButton>
+          <ToggleButton value="edit">EDIT</ToggleButton>
+          <ToggleButton value="view">VIEW</ToggleButton>
+        </ToggleButtonGroup>
+
+        <h1>Add Issue Type</h1>
+        <div style={{display:'flex',marginTop:'10px'}}> 
+          <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+          <Button variant="outlined">Add</Button>
+        </div>
+        <h1>Issue Sites</h1>
+        <List sx={{
+            maxHeight:'300px',
+            overflow:"auto"
+        }}>
+          {siteMarkers.map(item => <Issue info={item}></Issue>)}
+        </List>
       </div>
     </Card>
     

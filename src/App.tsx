@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, ThemeProvider, createTheme } from '@mui/material';
+import MainPage from './Components/MainPage'
 
 const darkTheme = createTheme({
   palette:{
@@ -18,7 +19,7 @@ const darkTheme = createTheme({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={darkTheme}>
-        <MapPlain/>
+        <MainPage></MainPage>
     </ThemeProvider>
     
   </React.StrictMode>,
