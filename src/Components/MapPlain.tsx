@@ -29,9 +29,10 @@ const MapPlain = () => {
   };
 
   const getMouseCords = (e : any) =>{
+      let rect = e.currentTarget.getBoundingClientRect();
       let cords = {
-          x: e.clientX - e.currentTarget.offsetLeft,
-          y:e.clientY - e.currentTarget.offsetTop
+          x: e.clientX - rect.left,
+          y:e.clientY - rect.top
       }
       return cords
   }
