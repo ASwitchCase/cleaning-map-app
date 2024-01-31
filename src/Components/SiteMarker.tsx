@@ -10,7 +10,7 @@ interface propsModel{
 const SiteMarker = (props:propsModel) => {
   return (
     <>
-        <div className='site-marker-container' style={{top:props.model.cords.y,left:props.model.cords.x}}>
+        <div className='site-marker-container' style={{top:props.model.cords.y - 20,left:props.model.cords.x -20}}>
 
           <IconButton aria-label="delete">
               <PushPinIcon color='secondary'/>

@@ -4,6 +4,8 @@ import { SiteModel } from 'src/Models/SiteModel'
 import img from '/Public/SeatingMap.jpg'
 import { Button, Card, List, TextField, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import Issue from './Issue'
+import { IssueTypeModel } from 'src/Models/IssueTypeModel'
+import IssueType from './IssueType'
 
 const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -22,11 +24,23 @@ enum MapMode {
 
 const MapPlain = () => {
   const[mode,setMode] = useState<MapMode>(MapMode.ADD)
+  const[newIssueType,setNewIssueType] = useState("")
   const[siteMarkers,setSiteMarkers] = useState([])
+  const[issueTypes,setIssueTypes] = useState([])
 
   const handleChange = (event: React.MouseEvent<HTMLElement>,newMode: MapMode,) => {
     setMode(newMode);
   };
+
+  const handleDeleteIssueType = (id: string) => {
+    const newList = issueTypes.filter(item => item.id !== id)
+    setIssueTypes(newList)
+  }
+
+  const handleDeleteIssue = (id: string) => {
+    const newList = siteMarkers.filter(item => item.id !== id)
+    setSiteMarkers(newList)
+  }
 
   const getMouseCords = (e : any) =>{
       let rect = e.currentTarget.getBoundingClientRect();
@@ -60,7 +74,18 @@ const MapPlain = () => {
 
   useEffect(()=>{
     setSiteMarkers((prevState) => [...prevState])
+    setIssueTypes((prev) => [...prev])
+    setNewIssueType((prev) => prev)
   },[])
+
+  const handleAddIssueType = () => {
+    const n : IssueTypeModel = {
+      id: uuidv4(),
+      name: newIssueType,
+      color: "GREEN"
+    }
+    setIssueTypes([...issueTypes,n])
+  }
 
   return (
   <>
@@ -106,15 +131,18 @@ const MapPlain = () => {
 
         <h1>Add Issue Type</h1>
         <div style={{display:'flex',marginTop:'10px'}}> 
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-          <Button variant="outlined">Add</Button>
+          <TextField onChange={(e) => setNewIssueType(e.target.value)} id="outlined-basic" label="Outlined" variant="outlined" />
+          <Button onClick={handleAddIssueType} variant="outlined">Add</Button>
+        </div>
+        <div className='issue-type-container'> 
+            {issueTypes.map(item => <IssueType onDelete={handleDeleteIssueType} issueType={item}/>)}
         </div>
         <h1>Issue Sites</h1>
         <List sx={{
             maxHeight:'300px',
             overflow:"auto"
         }}>
-          {siteMarkers.map(item => <Issue info={item}></Issue>)}
+          {siteMarkers.map(item => <Issue onDelete={handleDeleteIssue} info={item}></Issue>)}
         </List>
       </div>
     </Card>
