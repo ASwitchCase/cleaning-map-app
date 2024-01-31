@@ -17,10 +17,10 @@ body{
 }
 
 .site-marker-container{
-  width: 10px;
-  height: 10px;
+  width: 41px;
+  height: 41px;
 
-  border: 1px solid black;
+  border: 3px solid rgb(158, 0, 0);
   border-radius: 100%;
 
   position: absolute;
@@ -43,4 +43,16 @@ body{
 
   display: flex;
   justify-content: center;
+}
+
+.issue-type-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  margin-top: 15px;
+
+  width: 300px;
+  height: 100px;
+  overflow-y: auto;
+  flex-wrap: wrap;
 }
