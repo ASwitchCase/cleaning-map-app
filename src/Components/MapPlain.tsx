@@ -6,6 +6,8 @@ import { Button, Card, List, TextField, ToggleButton, ToggleButtonGroup } from '
 import Issue from './Issue'
 import { IssueTypeModel } from 'src/Models/IssueTypeModel'
 import IssueType from './IssueType'
+import EditDialog from './EditDialog'
+import CheckSelectBox from './CheckSelectBox'
 
 const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
@@ -41,6 +43,14 @@ const MapPlain = () => {
     const newList = siteMarkers.filter(item => item.id !== id)
     setSiteMarkers(newList)
   }
+  const handleEditIssue = (id: string,newData: SiteModel) => {
+    let index = siteMarkers.findIndex(site => site.id === id)
+    let newList = [...siteMarkers]
+    newList[index] = newData
+    
+    setSiteMarkers(newList)
+    console.log(siteMarkers)
+  }
 
   const getMouseCords = (e : any) =>{
       let rect = e.currentTarget.getBoundingClientRect();
@@ -58,6 +68,8 @@ const MapPlain = () => {
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
+    let hour = date.getHours();
+    let min = date.getMinutes();
 
     const newModel : SiteModel = {
       cords: {
@@ -67,16 +79,13 @@ const MapPlain = () => {
       id: uuidv4(),
       issues: [],
       description: 'Issue Site',
-      created_at:`${day}-${month}-${year}`
+      created_at:`${day}-${month}-${year}-${hour}:${min}`
     }
     setSiteMarkers([...siteMarkers,newModel])
   }
 
   useEffect(()=>{
-    setSiteMarkers((prevState) => [...prevState])
-    setIssueTypes((prev) => [...prev])
-    setNewIssueType((prev) => prev)
-  },[])
+  },[siteMarkers,issueTypes,newIssueType])
 
   const handleAddIssueType = () => {
     const n : IssueTypeModel = {
@@ -98,19 +107,19 @@ const MapPlain = () => {
         {mode == MapMode.ADD?
         <div onClick={(e)=> addSiteMarker(e)} className='map-plain'>
           <img className='map-img' src={img}></img>
-          {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
+          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} isEditable={false} key={marker.id} model={marker}/>)}
         </div>
         
       :mode == MapMode.EDIT?
         <div className='map-plain'>
           <img className='map-img' src={img}></img>
-          {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
+          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} isEditable={true} key={marker.id} model={marker}/>)}
         </div>
 
       :mode == MapMode.VIEW?
       <div className='map-plain'>
         <img className='map-img' src={img}></img>
-        {siteMarkers.map(marker=><SiteMarker key={marker.id} model={marker}/>)}
+        {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} isEditable={false} key={marker.id} model={marker}/>)}
       </div>
       :<h1>Error: No Mode</h1>
       }
@@ -142,7 +151,7 @@ const MapPlain = () => {
             maxHeight:'300px',
             overflow:"auto"
         }}>
-          {siteMarkers.map(item => <Issue onDelete={handleDeleteIssue} info={item}></Issue>)}
+          {siteMarkers.map(item => <Issue key={item.id} onDelete={handleDeleteIssue} info={item}></Issue>)}
         </List>
       </div>
     </Card>
