@@ -44,7 +44,7 @@ export interface SimpleDialogProps {
         <TextField
           id="standard-textarea"
           label="Description"
-          placeholder=""
+          placeholder={props.data.description}
           multiline
           variant="filled"
           rows={4}

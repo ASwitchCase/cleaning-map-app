@@ -25,6 +25,7 @@ import FmdBadIcon from '@mui/icons-material/FmdBad'
 import SettingsIcon from '@mui/icons-material/Settings';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import SaveIcon from '@mui/icons-material/Save';
+import MapIcon from '@mui/icons-material/Map';
 
 const MainPage = () => {
   return (
@@ -173,7 +174,7 @@ function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Main Auditorium
+            Maps
           </Typography>
         </Toolbar>
       </AppBar>
@@ -185,6 +186,26 @@ function MiniDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
+        <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <MapIcon/>
+                  </ListItemIcon>
+                  <ListItemText primary={"Maps"} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+            </ListItem>
           <ListItem disablePadding sx={{ display: 'block' }}>
             <ListItemButton
                   sx={{
@@ -226,6 +247,7 @@ function MiniDrawer() {
                   <ListItemText primary={"Issues"} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
             </ListItem>
+
         </List>
         <Divider />
         <List>
@@ -296,24 +318,24 @@ function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <div className='content-container'>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Main Auditorium" {...a11yProps(0)} />
-              <Tab label="Balcony" {...a11yProps(1)} />
-              <Tab label="Main Lobby" {...a11yProps(2)} />
-            </Tabs>
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tab label="Main Auditorium" {...a11yProps(0)} />
+                <Tab label="Balcony" {...a11yProps(1)} />
+                <Tab label="Main Lobby" {...a11yProps(2)} />
+              </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+              <MapPlain/>
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={1}>
+              Item Two
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
+              Item fff
+            </CustomTabPanel>
           </Box>
-          <CustomTabPanel value={value} index={0}>
-            <MapPlain/>
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
-            Item Two
-          </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
-            Item fff
-          </CustomTabPanel>
-        </Box>
         </div>
         
       </Box>

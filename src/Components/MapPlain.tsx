@@ -28,7 +28,7 @@ const MapPlain = () => {
   const[mode,setMode] = useState<MapMode>(MapMode.ADD)
   const[newIssueType,setNewIssueType] = useState("")
   const[siteMarkers,setSiteMarkers] = useState([])
-  const[issueTypes,setIssueTypes] = useState([])
+  const[issueTypes,setIssueTypes] = useState<IssueTypeModel[]>([{id:"1",color:"GREEN",name:"Coffee"},{id:"1",color:"GREEN",name:"Water"}])
 
   const handleChange = (event: React.MouseEvent<HTMLElement>,newMode: MapMode,) => {
     setMode(newMode);
@@ -107,19 +107,27 @@ const MapPlain = () => {
         {mode == MapMode.ADD?
         <div onClick={(e)=> addSiteMarker(e)} className='map-plain'>
           <img className='map-img' src={img}></img>
-          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} isEditable={false} key={marker.id} model={marker}/>)}
+          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} mode={mode} key={marker.id} model={marker}/>)}
         </div>
         
       :mode == MapMode.EDIT?
         <div className='map-plain'>
           <img className='map-img' src={img}></img>
-          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} isEditable={true} key={marker.id} model={marker}/>)}
+          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} mode={mode} key={marker.id} model={marker}/>)}
         </div>
 
       :mode == MapMode.VIEW?
       <div className='map-plain'>
         <img className='map-img' src={img}></img>
-        {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} isEditable={false} key={marker.id} model={marker}/>)}
+        {siteMarkers.map(marker=>
+          <SiteMarker 
+            onEdit={handleEditIssue} 
+            issueTypes={issueTypes} 
+            mode={mode} 
+            key={marker.id} 
+            model={marker}
+          />
+        )}
       </div>
       :<h1>Error: No Mode</h1>
       }
