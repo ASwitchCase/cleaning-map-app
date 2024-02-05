@@ -28,8 +28,8 @@ export interface SimpleDialogProps {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <div className='issue-type-container'> 
-                {props.data.issues.map(item => <Chip label={item.name}/>)}
+            <div style={{height:'50px'}} className='issue-type-container'> 
+                {props.data.issues.length === 0? <h2>Empty</h2>: props.data.issues.map(item => <Chip label={item.name}/>)}
             </div>
           </DialogContentText>
         </DialogContent>
