@@ -107,13 +107,29 @@ const MapPlain = () => {
         {mode == MapMode.ADD?
         <div onClick={(e)=> addSiteMarker(e)} className='map-plain'>
           <img className='map-img' src={img}></img>
-          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} mode={mode} key={marker.id} model={marker}/>)}
+          {siteMarkers.map(marker=>
+            <SiteMarker 
+              onEdit={handleEditIssue} 
+              issueTypes={issueTypes} 
+              mode={mode} 
+              key={marker.id} 
+              model={marker}
+            />
+          )}
         </div>
         
       :mode == MapMode.EDIT?
         <div className='map-plain'>
           <img className='map-img' src={img}></img>
-          {siteMarkers.map(marker=><SiteMarker onEdit={handleEditIssue} issueTypes={issueTypes} mode={mode} key={marker.id} model={marker}/>)}
+          {siteMarkers.map(marker=>
+            <SiteMarker 
+              onEdit={handleEditIssue} 
+              issueTypes={issueTypes} 
+              mode={mode} 
+              key={marker.id} 
+              model={marker}
+            />
+          )}
         </div>
 
       :mode == MapMode.VIEW?
