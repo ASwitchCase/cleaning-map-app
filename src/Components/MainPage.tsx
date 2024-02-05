@@ -280,7 +280,9 @@ function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        <MapPage/>
+        <div className='content-container'>
+          <MapPage/>
+        </div>
       </Box>
     </Box>
   );

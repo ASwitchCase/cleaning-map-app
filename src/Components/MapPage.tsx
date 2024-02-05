@@ -16,7 +16,6 @@ const MapPage = () => {
     }
   return (
     <div>
-        <div className='content-container'>
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -35,7 +34,6 @@ const MapPage = () => {
               Item fff
             </CustomTabPanel>
           </Box>
-        </div>
     </div>
   )
 }
