@@ -17,8 +17,6 @@ export interface SimpleDialogProps {
     };
   
     return (
-      <Dialog onClose={handleClose} open={open}>
-        Open alert dialog
       <Dialog
         open={open}
         onClose={handleClose}
@@ -38,7 +36,6 @@ export interface SimpleDialogProps {
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
         </DialogActions>
-      </Dialog>
       </Dialog>
     );
   }
